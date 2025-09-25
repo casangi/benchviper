@@ -1,0 +1,9 @@
+{
+    "arch": "arm64",
+    "cpu": "Apple M3 Pro",
+    "machine": "akaogiite",
+    "num_cpu": "12",
+    "os": "macOS 14.7 (Sonoma)",
+    "ram": "36GB",
+    "version": 1
+}
