@@ -13,7 +13,7 @@ micromamba install python==3.12
 micromamba install asv
 
 asv quickstart
-# configured to use "option 1" (standalone repo), which creates asv.conf.json
+# configured to use "standalone repo" option, which creates asv.conf.json
 ```
 > [!NOTE]
 > For `xradio`, the environment building commands disqualify running benchmarks using [asv's environment isolation](https://asv.readthedocs.io/en/latest/using.html#environments) on macOS (unless "environment_type" is set to "existing"). This is due to the dependencies requiring pre-installation of `python-casacore` from conda-forge before running the regular wheel building commands (which still to be [specified](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/#build-time-dependencies) in [xradio/pyproject.toml](https://github.com/casangi/xradio/blob/main/pyproject.toml)).
