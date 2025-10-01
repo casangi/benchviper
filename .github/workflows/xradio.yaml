@@ -25,7 +25,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build and test
         run: |
-          pip install asv virtualenv
+          pip install asv virtualenv xradio
           cd xradio
           asv machine --yes
           asv run --verbose --dry-run
