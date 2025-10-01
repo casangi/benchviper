@@ -1,0 +1,31 @@
+name: Build and test xradio with asv
+on:
+  schedule:
+     - cron: "0 12 * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: ${{ !(github.ref == 'refs/heads/main') }}
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          activate-environment: bench
+          allow-softlinks: true
+          python-version: ${{ matrix.python }}
+          channels: conda-forge
+          channel-priority: strict
+          miniforge-version: latest
+          use-only-tar-bz2: true
+          use-mamba: true
+      - uses: actions/checkout@v4
+      - name: Build and test
+        run: |
+          pip install asv virtualenv
+          cd xradio
+          asv machine --yes
+          asv run --verbose --dry-run
