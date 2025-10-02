@@ -1,9 +1,3 @@
-# Write the benchmarking functions here.
-# See "Writing benchmarks" in the asv docs for more information.
-
-# Adapted from
-# https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/test_load_processing_set.py
-# at commit b1618b0fa08a3e657dff8905eb93d298717b7ae5
 import shutil
 import xarray as xr
 
@@ -12,7 +6,13 @@ from xradio.schema.check import check_datatree
 
 
 class TestLoadProcessingSet:
-    """Tests for load_processing_set using real data"""
+    """
+    Tests for load_processing_set using real data
+    Adapted from:
+    https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/test_load_processing_set.py
+    at commit:
+    b1618b0fa08a3e657dff8905eb93d298717b7ae5
+    """
 
     MeasurementSet = "Antennae_North.cal.lsrk.split.ms"
     processing_set = "test_processing_set.ps.zarr"
