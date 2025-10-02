@@ -29,5 +29,5 @@ jobs:
           pip install asv virtualenv
           # benchviper organizes each external project in its own subdir
           cd xradio
-          asv machine --yes
+          asv machine --machine gh-runner --yes
           asv run --verbose
