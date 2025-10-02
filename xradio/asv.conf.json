@@ -16,15 +16,15 @@
     // The Python project's subdirectory in your repo.  If missing or
     // the empty string, the project is assumed to be located at the root
     // of the repository.
-    "repo_subdir": "xradio",
+    //"repo_subdir": "src/xradio",
 
     // Customizable commands for building the project.
     // See asv.conf.json documentation.
     // To build the package using pyproject.toml (PEP518), uncomment the following lines
     "build_command": [
         "python -m pip install build",
-        "python -m build",
-        "python -mpip wheel -w {build_cache_dir} {build_dir}"
+        "python -m build --wheel",
+        "python -m pip wheel --no-deps --no-build-isolation --no-index -w {build_cache_dir} {build_dir}"
     ],
     // To build the package using setuptools and a setup.py file, uncomment the following lines
     // "build_command": [
@@ -34,8 +34,9 @@
 
     // Customizable commands for installing and uninstalling the project.
     // See asv.conf.json documentation.
-    // "install_command": ["in-dir={env_dir} python -mpip install {wheel_file}"],
-    // "uninstall_command": ["return-code=any python -mpip uninstall -y {project}"],
+    //"install_command": ["in-dir={env_dir} python -m pip install {build_dir}/dist/*.whl"],
+    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}"],
+    "uninstall_command": ["return-code=any python -m pip uninstall -y {project}"],
 
     // List of branches to benchmark. If not provided, defaults to "main"
     // (for git) or "default" (for mercurial).
@@ -54,18 +55,19 @@
     // If missing or the empty string, the tool will be automatically
     // determined by looking for tools on the PATH environment
     // variable.
-    "environment_type": "existing",
+    //"environment_type": "existing",
+    "environment_type": "virtualenv",
 
     // timeout in seconds for installing any dependencies in environment
     // defaults to 10 min
     //"install_timeout": 600,
 
     // the base URL to show a commit for the project.
-    // "show_commit_url": "http://github.com/owner/project/commit/",
+    "show_commit_url": "https://github.com/casangi/xradio/commits/",
 
     // The Pythons you'd like to test against.  If not provided, defaults
     // to the current version of Python used to run `asv`.
-    "pythons": ["3.12", "3.13"],
+    "pythons": ["3.12"],
 
     // The list of conda channel names to be searched for benchmark
     // dependency packages in the specified order
@@ -105,7 +107,7 @@
     // },
     "matrix": {
         "req": {
-            "python-casacore": ["3.6.1", "3.7.1", null],
+            "python-casacore": ["3.7.1"],
         },
     },
 
