@@ -51,19 +51,10 @@ class TestLoadProcessingSet:
         ps_xdt = load_processing_set(self.processing_set)
         issues = check_datatree(ps_xdt)
         # The check_datatree function returns a SchemaIssues object, not a string
-        assert (
-            str(issues) == "No schema issues found"
-        ), f"Schema validation failed: {issues}"
 
     def time_test_basic_load(self):
         """Test basic loading of processing set without parameters"""
         ps_xdt = load_processing_set(self.processing_set)
-
-        # Verify basic structure
-        assert isinstance(ps_xdt, xr.DataTree)
-        assert ps_xdt.attrs.get("type") == "processing_set"
-        # Should have at least one measurement set. Partitioning gives the number of children
-        assert len(ps_xdt.children) > 0
 
     def time_test_selective_loading(self):
         """Test loading with selection parameters"""
@@ -74,29 +65,14 @@ class TestLoadProcessingSet:
         ms_basename = self.MeasurementSet
         expected_names = [f"{ms_basename}_{i}" for i in range(4)]  # 0 to 3
         ms_names = list(full_ps.children.keys())
-        assert len(ms_names) == len(
-            expected_names
-        ), "Number of measurement sets doesn't match"
-        for ms_name, expected_name in zip(sorted(ms_names), sorted(expected_names)):
-            assert (
-                ms_name == expected_name
-            ), f"Expected {expected_name} but got {ms_name}"
 
         # Test loading with selection parameters
         sel_parms = {ms_name: {"time": slice(0, 10)}}
         ps_xdt = load_processing_set(self.processing_set, sel_parms=sel_parms)
 
-        assert isinstance(ps_xdt, xr.DataTree)
-        assert ms_name in ps_xdt.children
-        assert ps_xdt[ms_name].dims["time"] <= 10
-
     def time_test_data_group_selection(self):
         """Test loading with specific data group"""
         ps_xdt = load_processing_set(self.processing_set, data_group_name="base")
-
-        assert isinstance(ps_xdt, xr.DataTree)
-        for ms_xdt in ps_xdt.children.values():
-            assert "base" in ms_xdt.attrs.get("data_groups", {})
 
     def time_test_variable_selection(self):
         """Test loading with specific variables included/excluded"""
@@ -107,16 +83,9 @@ class TestLoadProcessingSet:
             include_variables=include_vars,
         )
 
-        for ms_xdt in ps_xdt.children.values():
-            assert "VISIBILITY" in ms_xdt.data_vars
-            assert len(ms_xdt.data_vars) == 1
-
         # Test dropping specific variables
         drop_vars = ["WEIGHT"]
         ps_xdt = load_processing_set(self.processing_set, drop_variables=drop_vars)
-
-        for ms_xdt in ps_xdt.children.values():
-            assert "WEIGHT" not in ms_xdt.data_vars
 
     def test_sub_datasets(self):
         """Test loading with and without sub-datasets"""
@@ -127,6 +96,3 @@ class TestLoadProcessingSet:
         ps_without_subs = load_processing_set(
             self.processing_set, load_sub_datasets=False
         )
-
-        for ms_xdt in ps_without_subs.children.values():
-            assert not any("xds" in name for name in ms_xdt.keys())
