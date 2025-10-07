@@ -62,7 +62,7 @@ class TestLoadProcessingSet:
         full_ps = load_processing_set(self.processing_set)
 
         # Check MS names are the expected ones
-        ms_basename = self.MeasurementSet
+        ms_basename = "Antennae_North.cal.lsrk.split"
         expected_names = [f"{ms_basename}_{i}" for i in range(4)]  # 0 to 3
         ms_names = list(full_ps.children.keys())
 
