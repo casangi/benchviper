@@ -66,6 +66,14 @@ class TestLoadProcessingSet:
         expected_names = [f"{ms_basename}_{i}" for i in range(4)]  # 0 to 3
         ms_names = list(full_ps.children.keys())
 
+        assert len(ms_names) == len(
+            expected_names
+        ), "Number of measurement sets doesn't match"
+        for ms_name, expected_name in zip(sorted(ms_names), sorted(expected_names)):
+            assert (
+                ms_name == expected_name
+            ), f"Expected {expected_name} but got {ms_name}"
+
         # Test loading with selection parameters
         sel_parms = {ms_name: {"time": slice(0, 10)}}
         ps_xdt = load_processing_set(self.processing_set, sel_parms=sel_parms)
