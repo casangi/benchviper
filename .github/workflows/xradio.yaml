@@ -1,7 +1,7 @@
 name: Build and test xradio with asv
 on:
   schedule:
-     - cron: "00 18 * * *"
+     - cron: "00 12 * * *"
 
 jobs:
   build:
