@@ -30,4 +30,4 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd xradio
           asv machine --machine gh-runner --yes
-          asv run --verbose
+          asv run "--merges main" --verbose --parallel --interleave-rounds --skip-existing
