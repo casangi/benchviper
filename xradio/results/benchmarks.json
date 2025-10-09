@@ -1,8 +1,8 @@
 {
-    "measurement_set.TestLoadProcessingSet.time_test_basic_load": {
-        "code": "class TestLoadProcessingSet:\n    def time_test_basic_load(self):\n        \"\"\"Test basic loading of processing set without parameters\"\"\"\n        ps_xdt = load_processing_set(self.processing_set)\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
+    "measurement_set.TestLoadProcessingSet.time_basic_load": {
+        "code": "class TestLoadProcessingSet:\n    def time_basic_load(self):\n        \"\"\"Test basic loading of processing set without parameters\"\"\"\n        ps_xdt = load_processing_set(self.processing_set)\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
         "min_run_count": 2,
-        "name": "measurement_set.TestLoadProcessingSet.time_test_basic_load",
+        "name": "measurement_set.TestLoadProcessingSet.time_basic_load",
         "number": 0,
         "param_names": [],
         "params": [],
@@ -12,13 +12,13 @@
         "setup_cache_key": "measurement_set:20",
         "type": "time",
         "unit": "seconds",
-        "version": "74de304186d652ece4fd792eaefe0e932fadaf4bc86339b9acdbb363a8d4da63",
+        "version": "ec59672a58901670783afa587b17afabf689ad3cdd6a3badd098900d34ac1790",
         "warmup_time": -1
     },
-    "measurement_set.TestLoadProcessingSet.time_test_check_datatree": {
-        "code": "class TestLoadProcessingSet:\n    def time_test_check_datatree(self):\n        \"\"\"Test that the converted MS to PS complies with the datatree schema checker\"\"\"\n        ps_xdt = load_processing_set(self.processing_set)\n        issues = check_datatree(ps_xdt)\n        # The check_datatree function returns a SchemaIssues object, not a string\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
+    "measurement_set.TestLoadProcessingSet.time_check_datatree": {
+        "code": "class TestLoadProcessingSet:\n    def time_check_datatree(self):\n        \"\"\"Test that the converted MS to PS complies with the datatree schema checker\"\"\"\n        ps_xdt = load_processing_set(self.processing_set)\n        issues = check_datatree(ps_xdt)\n        # The check_datatree function returns a SchemaIssues object, not a string\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
         "min_run_count": 2,
-        "name": "measurement_set.TestLoadProcessingSet.time_test_check_datatree",
+        "name": "measurement_set.TestLoadProcessingSet.time_check_datatree",
         "number": 0,
         "param_names": [],
         "params": [],
@@ -28,13 +28,13 @@
         "setup_cache_key": "measurement_set:20",
         "type": "time",
         "unit": "seconds",
-        "version": "39aa9580afb671d35f840a473bbcea1f70d5760216e3988bf6891f822378ca7a",
+        "version": "3266b2830e4c0b69ac3c071a31a6f95993b3216622285f8472514300fc0e1461",
         "warmup_time": -1
     },
-    "measurement_set.TestLoadProcessingSet.time_test_data_group_selection": {
-        "code": "class TestLoadProcessingSet:\n    def time_test_data_group_selection(self):\n        \"\"\"Test loading with specific data group\"\"\"\n        ps_xdt = load_processing_set(self.processing_set, data_group_name=\"base\")\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
+    "measurement_set.TestLoadProcessingSet.time_data_group_selection": {
+        "code": "class TestLoadProcessingSet:\n    def time_data_group_selection(self):\n        \"\"\"Test loading with specific data group\"\"\"\n        ps_xdt = load_processing_set(self.processing_set, data_group_name=\"base\")\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
         "min_run_count": 2,
-        "name": "measurement_set.TestLoadProcessingSet.time_test_data_group_selection",
+        "name": "measurement_set.TestLoadProcessingSet.time_data_group_selection",
         "number": 0,
         "param_names": [],
         "params": [],
@@ -44,13 +44,13 @@
         "setup_cache_key": "measurement_set:20",
         "type": "time",
         "unit": "seconds",
-        "version": "fb7973c53304416fd0d9589ae5be2fcddbe5022896d62cd209f781a8614d1ee4",
+        "version": "1d4fde2f338b9978b4f8f5e2cfa4d09404d23b379d8c6da42ab0efc882505bcc",
         "warmup_time": -1
     },
-    "measurement_set.TestLoadProcessingSet.time_test_selective_loading": {
-        "code": "class TestLoadProcessingSet:\n    def time_test_selective_loading(self):\n        \"\"\"Test loading with selection parameters\"\"\"\n        # First load normally to get MS names\n        full_ps = load_processing_set(self.processing_set)\n    \n        # Check MS names are the expected ones\n        ms_basename = \"Antennae_North.cal.lsrk.split\"\n        expected_names = [f\"{ms_basename}_{i}\" for i in range(4)]  # 0 to 3\n        ms_names = list(full_ps.children.keys())\n    \n        assert len(ms_names) == len(\n            expected_names\n        ), \"Number of measurement sets doesn't match\"\n        for ms_name, expected_name in zip(sorted(ms_names), sorted(expected_names)):\n            assert (\n                ms_name == expected_name\n            ), f\"Expected {expected_name} but got {ms_name}\"\n    \n        # Test loading with selection parameters\n        sel_parms = {ms_name: {\"time\": slice(0, 10)}}\n        ps_xdt = load_processing_set(self.processing_set, sel_parms=sel_parms)\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
+    "measurement_set.TestLoadProcessingSet.time_selective_loading": {
+        "code": "class TestLoadProcessingSet:\n    def time_selective_loading(self):\n        \"\"\"Test loading with selection parameters\"\"\"\n        # First load normally to get MS names\n        full_ps = load_processing_set(self.processing_set)\n    \n        # Check MS names are the expected ones\n        ms_basename = \"Antennae_North.cal.lsrk.split\"\n        expected_names = [f\"{ms_basename}_{i}\" for i in range(4)]  # 0 to 3\n        ms_names = list(full_ps.children.keys())\n    \n        assert len(ms_names) == len(\n            expected_names\n        ), \"Number of measurement sets doesn't match\"\n        for ms_name, expected_name in zip(sorted(ms_names), sorted(expected_names)):\n            assert (\n                ms_name == expected_name\n            ), f\"Expected {expected_name} but got {ms_name}\"\n    \n        # Test loading with selection parameters\n        sel_parms = {ms_name: {\"time\": slice(0, 10)}}\n        ps_xdt = load_processing_set(self.processing_set, sel_parms=sel_parms)\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
         "min_run_count": 2,
-        "name": "measurement_set.TestLoadProcessingSet.time_test_selective_loading",
+        "name": "measurement_set.TestLoadProcessingSet.time_selective_loading",
         "number": 0,
         "param_names": [],
         "params": [],
@@ -60,13 +60,13 @@
         "setup_cache_key": "measurement_set:20",
         "type": "time",
         "unit": "seconds",
-        "version": "04a640dbd1333449cc701549aa428d0d30c8c8791c3897b0044b2673b8996850",
+        "version": "79086f3ed98d0c27fe81237161fede25c8e439dae662382c2cede03979f548f2",
         "warmup_time": -1
     },
-    "measurement_set.TestLoadProcessingSet.time_test_variable_selection": {
-        "code": "class TestLoadProcessingSet:\n    def time_test_variable_selection(self):\n        \"\"\"Test loading with specific variables included/excluded\"\"\"\n        # Test including specific variables\n        include_vars = [\"VISIBILITY\"]\n        ps_xdt = load_processing_set(\n            self.processing_set,\n            include_variables=include_vars,\n        )\n    \n        # Test dropping specific variables\n        drop_vars = [\"WEIGHT\"]\n        ps_xdt = load_processing_set(self.processing_set, drop_variables=drop_vars)\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
+    "measurement_set.TestLoadProcessingSet.time_sub_datasets": {
+        "code": "class TestLoadProcessingSet:\n    def time_sub_datasets(self):\n        \"\"\"Test loading with and without sub-datasets\"\"\"\n        # Test with sub-datasets\n        _ps_with_subs = load_processing_set(self.processing_set, load_sub_datasets=True)\n    \n        # Test without sub-datasets\n        ps_without_subs = load_processing_set(\n            self.processing_set, load_sub_datasets=False\n        )\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
         "min_run_count": 2,
-        "name": "measurement_set.TestLoadProcessingSet.time_test_variable_selection",
+        "name": "measurement_set.TestLoadProcessingSet.time_sub_datasets",
         "number": 0,
         "param_names": [],
         "params": [],
@@ -76,7 +76,23 @@
         "setup_cache_key": "measurement_set:20",
         "type": "time",
         "unit": "seconds",
-        "version": "2de06452e057d86557340ae432f8ae88eedc4f5eb47c78f873be4c281f19606c",
+        "version": "9b8c816a772912dc1fc6693e4027104151c3c86757d1bf53db4f20ae8fa97cc1",
+        "warmup_time": -1
+    },
+    "measurement_set.TestLoadProcessingSet.time_variable_selection": {
+        "code": "class TestLoadProcessingSet:\n    def time_variable_selection(self):\n        \"\"\"Test loading with specific variables included/excluded\"\"\"\n        # Test including specific variables\n        include_vars = [\"VISIBILITY\"]\n        ps_xdt = load_processing_set(\n            self.processing_set,\n            include_variables=include_vars,\n        )\n    \n        # Test dropping specific variables\n        drop_vars = [\"WEIGHT\"]\n        ps_xdt = load_processing_set(self.processing_set, drop_variables=drop_vars)\n\n    def setup_cache(self):\n        # perform the expensive operations once (per env, per commit), see\n        # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions\n    \n        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py\n    \n        # download MS from cloudflare using helper module\n        from toolviper.utils.data import download\n    \n        download(file=self.MeasurementSet)\n    \n        # Convert MS to processing set\n        from xradio.measurement_set import convert_msv2_to_processing_set\n    \n        ps_path = self.processing_set\n    \n        convert_msv2_to_processing_set(\n            in_file=self.MeasurementSet,\n            out_file=self.processing_set,\n            partition_scheme=[],\n            main_chunksize=0.01,\n            pointing_chunksize=0.00001,\n            pointing_interpolate=True,\n            ephemeris_interpolate=True,\n            use_table_iter=False,\n            overwrite=True,\n            parallel_mode=\"none\",\n        )",
+        "min_run_count": 2,
+        "name": "measurement_set.TestLoadProcessingSet.time_variable_selection",
+        "number": 0,
+        "param_names": [],
+        "params": [],
+        "repeat": 0,
+        "rounds": 2,
+        "sample_time": 0.01,
+        "setup_cache_key": "measurement_set:20",
+        "type": "time",
+        "unit": "seconds",
+        "version": "70b4f99c7bfe22558bb5707df5d0b159b32de480e822b40686a3a8e8adefae9e",
         "warmup_time": -1
     },
     "version": 2

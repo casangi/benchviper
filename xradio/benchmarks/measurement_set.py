@@ -46,17 +46,17 @@ class TestLoadProcessingSet:
             parallel_mode="none",
         )
 
-    def time_test_check_datatree(self):
+    def time_check_datatree(self):
         """Test that the converted MS to PS complies with the datatree schema checker"""
         ps_xdt = load_processing_set(self.processing_set)
         issues = check_datatree(ps_xdt)
         # The check_datatree function returns a SchemaIssues object, not a string
 
-    def time_test_basic_load(self):
+    def time_basic_load(self):
         """Test basic loading of processing set without parameters"""
         ps_xdt = load_processing_set(self.processing_set)
 
-    def time_test_selective_loading(self):
+    def time_selective_loading(self):
         """Test loading with selection parameters"""
         # First load normally to get MS names
         full_ps = load_processing_set(self.processing_set)
@@ -78,11 +78,11 @@ class TestLoadProcessingSet:
         sel_parms = {ms_name: {"time": slice(0, 10)}}
         ps_xdt = load_processing_set(self.processing_set, sel_parms=sel_parms)
 
-    def time_test_data_group_selection(self):
+    def time_data_group_selection(self):
         """Test loading with specific data group"""
         ps_xdt = load_processing_set(self.processing_set, data_group_name="base")
 
-    def time_test_variable_selection(self):
+    def time_variable_selection(self):
         """Test loading with specific variables included/excluded"""
         # Test including specific variables
         include_vars = ["VISIBILITY"]
@@ -95,7 +95,7 @@ class TestLoadProcessingSet:
         drop_vars = ["WEIGHT"]
         ps_xdt = load_processing_set(self.processing_set, drop_variables=drop_vars)
 
-    def test_sub_datasets(self):
+    def time_sub_datasets(self):
         """Test loading with and without sub-datasets"""
         # Test with sub-datasets
         _ps_with_subs = load_processing_set(self.processing_set, load_sub_datasets=True)
