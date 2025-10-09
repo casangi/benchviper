@@ -30,4 +30,15 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd xradio
           asv machine --machine gh-runner --yes
-          asv run "--merges main" --verbose --parallel --interleave-rounds --skip-existing
+          asv run "--merges main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv publish --verbose
+      - name: Archive results
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-results
+          path: results/gh-runner/*.json
+      - name: Archive generated html
+        uses: actions/upload-artifact@v4
+        with:
+          name: publish-html
+          path: html/*
