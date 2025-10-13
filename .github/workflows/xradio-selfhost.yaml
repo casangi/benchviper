@@ -1,0 +1,40 @@
+name: Build and test xradio with asv on self-hosted runner
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: "00 12 * * *"
+
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        python-version:
+          - "3.12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - uses: actions/checkout@v4
+      - name: Build and test
+        run: |
+          # if environment_type "existing", install project and dependencies
+          # otherwise, just need asv and selected environment manager
+          pip install asv virtualenv
+          # benchviper organizes each external project in its own subdir
+          cd xradio
+          asv run "--merges v0.0.49..main" --machine mano --parallel --interleave-rounds --skip-existing
+          asv publish --verbose
+      - name: Archive results
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: publish-results
+          path: /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/*.json
+      - name: Archive generated html
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: publish-html
+          path: /home/runner/work/benchviper/benchviper/xradio/html/*
