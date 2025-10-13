@@ -1,0 +1,9 @@
+{
+    "arch": "x86_64",
+    "cpu": "Intel(R) Xeon(R) CPU E5-1660 v4 @ 3.20GHz",
+    "machine": "mano",
+    "num_cpu": "16",
+    "os": "Linux 4.18.0-553.52.1.el8_10.x86_64",
+    "ram": "32572368",
+    "version": 1
+}
