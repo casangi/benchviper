@@ -1,5 +1,6 @@
 name: Build and test xradio with asv
 on:
+  workflow_dispatch:
   schedule:
      - cron: "00 12 * * *"
 
@@ -11,16 +12,10 @@ jobs:
         python-version: ["3.12"]
     steps:
       - uses: actions/checkout@v4
-      - uses: conda-incubator/setup-miniconda@v3
+      - uses: actions/setup-python@v6
         with:
-          activate-environment: bench
-          allow-softlinks: true
           python-version: ${{ matrix.python }}
-          channels: conda-forge
-          channel-priority: strict
-          miniforge-version: latest
-          use-only-tar-bz2: true
-          use-mamba: true
+	  cache: "pip"
       - uses: actions/checkout@v4
       - name: Build and test
         run: |
