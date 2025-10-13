@@ -1,8 +1,6 @@
 name: Build and test xradio with asv on self-hosted runner
 on:
   workflow_dispatch:
-  schedule:
-     - cron: "00 12 * * *"
 
 jobs:
   build:
