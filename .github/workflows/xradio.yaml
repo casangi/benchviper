@@ -29,11 +29,13 @@ jobs:
           asv publish --verbose
       - name: Archive results
         uses: actions/upload-artifact@v4
+        if: '!cancelled()'
         with:
           name: publish-results
           path: results/gh-runner/*.json
       - name: Archive generated html
         uses: actions/upload-artifact@v4
+        if: '!cancelled()'
         with:
           name: publish-html
           path: html/*
