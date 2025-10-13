@@ -21,8 +21,7 @@ asv quickstart
 ## Running and publishing benchmarks
 After populating `asv.conf.json` with values that reference the correct project, benchmarks may be run using `asv run --verbose`.
 
-> [!NOTE]
-> Uniform configuration of github-actions test VMs to register as the "same" platform (i.e., a single entry in the asv results database) using `asv machine` is still under development.
+Association of results with a particular entry in the results database is possible using the [`asv machine`](https://asv.readthedocs.io/en/stable/using.html#machine-information) command and by passing a value to the `--machine` argument of `asv run` (e.g., uniform configuration of github-actions test VMs to register as the "same" platform).
 
 > [!NOTE]
 > Dedication of an on-premises test machine connected to this repository using the [actions-runner-controller](https://docs.github.com/en/actions/concepts/runners/actions-runner-controller) mechanism is under preliminary investigation.
