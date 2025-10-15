@@ -30,7 +30,7 @@ jobs:
         if: '!cancelled()'
         with:
           name: publish-results
-          path: /home/github/actions-runner/_work/benchviper/benchviper/xradio/results/gh-runner/*.json
+          path: /home/github/actions-runner/_work/benchviper/benchviper/xradio/results/self-hosted-runner/*.json
       - name: Archive generated html
         uses: actions/upload-artifact@v4
         if: '!cancelled()'
