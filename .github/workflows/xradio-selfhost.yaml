@@ -22,7 +22,8 @@ jobs:
           pip install asv virtualenv
           # benchviper organizes each external project in its own subdir
           cd xradio
-          asv run "--merges v0.0.49..main" --machine mano --parallel --interleave-rounds --skip-existing
+          asv machine --machine self-hosted-runner --yes
+          asv run "--merges v0.0.49..main" --machine self-hosted-runner --parallel --interleave-rounds --skip-existing
           asv publish --verbose
       - name: Archive results
         uses: actions/upload-artifact@v4
