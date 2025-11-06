@@ -1,5 +1,6 @@
 import shutil
 import xarray as xr
+import time
 
 from xradio.measurement_set import load_processing_set
 from xradio.schema.check import check_datatree
@@ -104,3 +105,6 @@ class TestLoadProcessingSet:
         ps_without_subs = load_processing_set(
             self.processing_set, load_sub_datasets=False
         )
+
+    def time_new_empty_benchmark(self):
+        time.sleep(12)
