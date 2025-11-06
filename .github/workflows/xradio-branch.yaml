@@ -27,7 +27,7 @@ jobs:
           cd xradio
           asv machine --machine gh-runner --yes
           asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing
-          asv publish --verbose
+          asv publish
       - name: Archive results
         uses: actions/upload-artifact@v4
         if: '!cancelled()'
