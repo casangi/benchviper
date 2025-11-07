@@ -83,29 +83,32 @@ class TestLoadProcessingSet:
         """Test loading with specific data group"""
         ps_xdt = load_processing_set(self.processing_set, data_group_name="base")
 
-    def time_variable_selection(self):
-        """Test loading with specific variables included/excluded"""
-        # Test including specific variables
+    def time_include_variable(self):
+        """Test loading with specific variables included"""
+        # Test including specific variable
         include_vars = ["VISIBILITY"]
         ps_xdt = load_processing_set(
             self.processing_set,
             include_variables=include_vars,
         )
 
-        # Test dropping specific variables
+    def time_drop_variable(self):
+        """Test loading with specific variables dropped"""
+        # Test dropping specific variable
         drop_vars = ["WEIGHT"]
         ps_xdt = load_processing_set(self.processing_set, drop_variables=drop_vars)
 
-    def time_sub_datasets(self):
-        """Test loading with and without sub-datasets"""
+    def time_sub_datasets_true(self):
+        """Test loading with sub-datasets"""
         # Test with sub-datasets
         _ps_with_subs = load_processing_set(self.processing_set, load_sub_datasets=True)
 
+    def time_sub_datasets_false(self):
+        """Test loading without sub-datasets"""
         # Test without sub-datasets
         ps_without_subs = load_processing_set(
             self.processing_set, load_sub_datasets=False
         )
-
 
 class TestProcessingSetXdtWithData:
     """
@@ -149,45 +152,48 @@ class TestProcessingSetXdtWithData:
             parallel_mode="none",
         )
 
-    def time_summary(self):
+        # Load the PS in cache to use in every test case
+        return load_processing_set(self.processing_set)
+
+    def time_summary(self, ps_xdt):
         """Benchmark the summary method on a real processing set"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.summary()
 
-    def time_summary_ordered(self):
+    def time_summary_ordered(self, ps_xdt):
         """Benchmark the summary method with first_columns parameter"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.summary(first_columns=["spw_name", "scan_name"])
 
-    def time_get_max_dims(self):
+    def time_get_max_dims(self, ps_xdt):
         """Benchmark getting maximum dimensions from a processing set"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.get_max_dims()
 
-    def time_get_freq_axis(self):
+    def time_get_freq_axis(self, ps_xdt):
         """Benchmark getting frequency axis from a processing set"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.get_freq_axis()
 
-    def time_query_by_name(self):
+    def time_query_by_name(self, ps_xdt):
         """Benchmark querying a processing set by name"""
-        ps_xdt = load_processing_set(self.processing_set)
-        ms_names = list(ps_xdt.children.keys())
+        #ps_xdt = load_processing_set(self.processing_set)
+        ms_names = list(self.ps_xdt.children.keys())
         ps_xdt.xr_ps.query(name=ms_names[0])
 
-    def time_query_by_data_group(self):
+    def time_query_by_data_group(self, ps_xdt):
         """Benchmark querying a processing set by data group"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.query(data_group_name="base")
 
-    def time_get_combined_field_and_source_xds(self):
+    def time_get_combined_field_and_source_xds(self, ps_xdt):
         """Benchmark getting combined field and source dataset from a processing set"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.get_combined_field_and_source_xds()
 
-    def time_get_combined_antenna_xds(self):
+    def time_get_combined_antenna_xds(self, ps_xdt):
         """Benchmark getting combined antenna dataset from a processing set"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.get_combined_antenna_xds()
 
 
@@ -233,23 +239,26 @@ class TestProcessingSetXdtWithEphemerisData:
             parallel_mode="none",
         )
 
-    def time_check_datatree(self):
+        # Load the PS in cache to use in every test case
+        return load_processing_set(self.processing_set)
+
+    def time_check_datatree(self, ps_xdt):
         """Benchmark that the converted MS to PS complies with the datatree schema checker"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         check_datatree(ps_xdt)
 
-    def time_get_combined_field_and_source_xds_ephemeris(self):
+    def time_get_combined_field_and_source_xds_ephemeris(self, ps_xdt):
         """Benchmark getting combined field and source dataset with ephemeris from a processing set"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         ps_xdt.xr_ps.get_combined_field_and_source_xds_ephemeris()
 
-    def time_field_offset_calculation(self):
+    def time_field_offset_calculation(self, ps_xdt):
         """Benchmark that field offsets are correctly calculated"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         field_source_xds = ps_xdt.xr_ps.get_combined_field_and_source_xds_ephemeris()
         field_offset = field_source_xds["FIELD_OFFSET"]
 
-    def time_time_interpolation(self):
+    def time_time_interpolation(self, ps_xdt):
         """Benchmark that time interpolation works correctly for ephemeris data"""
-        ps_xdt = load_processing_set(self.processing_set)
+        #ps_xdt = load_processing_set(self.processing_set)
         field_source_xds = ps_xdt.xr_ps.get_combined_field_and_source_xds_ephemeris()
