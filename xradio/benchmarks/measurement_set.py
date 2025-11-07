@@ -178,7 +178,7 @@ class TestProcessingSetXdtWithData:
     def time_query_by_name(self, ps_xdt):
         """Benchmark querying a processing set by name"""
         #ps_xdt = load_processing_set(self.processing_set)
-        ms_names = list(self.ps_xdt.children.keys())
+        ms_names = list(ps_xdt.children.keys())
         ps_xdt.xr_ps.query(name=ms_names[0])
 
     def time_query_by_data_group(self, ps_xdt):
