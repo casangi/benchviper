@@ -26,6 +26,7 @@ jobs:
           asv machine --machine gh-runner --yes
           asv run "--merges v0.0.49..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
       - name: Build HTML
+        if: '!cancelled()'
         run: |
           cd xradio
           asv publish --verbose  
