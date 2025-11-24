@@ -27,7 +27,6 @@ jobs:
           asv machine --machine gh-runner --yes
           asv run "--merges v0.0.49..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
       - name: Push results
-        uses: actions/checkout@v4
         if: '!cancelled()'
         run: |
           git config user.name github-actions
