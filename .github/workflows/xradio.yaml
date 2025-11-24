@@ -3,7 +3,8 @@ on:
   workflow_dispatch:
   schedule:
      - cron: "00 12 * * *"
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,17 +26,20 @@ jobs:
           cd xradio
           asv machine --machine gh-runner --yes
           asv run "--merges v0.0.49..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+      - name: Push results
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/
+          git commit -m "Automated push of results from github action"
+          git push      
       - name: Build HTML
         if: '!cancelled()'
         run: |
           cd xradio
-          asv publish --verbose  
-      - name: Archive results
-        uses: actions/upload-artifact@v4
-        if: '!cancelled()'
-        with:
-          name: publish-results
-          path: /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/*.json
+          asv publish --verbose
       - name: Archive generated html
         uses: actions/upload-artifact@v4
         if: '!cancelled()'
