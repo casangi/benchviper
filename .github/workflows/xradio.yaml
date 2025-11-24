@@ -31,9 +31,13 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/
-          git commit -m "Automated push of results from github action"
-          git push      
+          if git status --porcelain xradio/results/gh-runner/ | grep .; then
+            git add /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/
+            git commit -m "Automated push of results from github action"
+            git push
+          else
+            echo "No new results detected for gh-runner machine entry in asv database"
+          fi
       - name: Build HTML
         if: '!cancelled()'
         run: |
