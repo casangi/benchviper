@@ -1,2 +1,18 @@
-This file can be used to describe the workflow actions themselves, if desired. For example, describing the "--skip-existing" functionality used by the `asv run` invocation.
+## github actions
+This area contains the workflow definition files that run in github actions.
 
+### xradio.yaml
+This file defines the workflow that runs daily to check for merge commits in xradio and runs _new_ combinations of 
+- environment (defined by asv.conf.json)
+- commit (defined by the range specified in the `asv run command`
+- test (defined by the contents of xradio/benchmarks of this repository, on the main branch)
+
+### xradio-branch.yaml
+This file defines the workflow that is triggered on demand to run only _the latest_ commit on a given development branch.
+
+See the documentation on the [`--skip-existing`](https://asv.readthedocs.io/en/stable/commands.html#asv-run) parameter for more details on how the `asv run` invocations interact with the results database.
+
+There is also one unused configuration file,
+
+### xradio-selfhost.yaml
+This workflow was used to test the configuration of a dedicated self-hosted runner located on premises at NRAO. This self-hosted runner is no longer active, so this workflow won't work even if it's manually triggered.
