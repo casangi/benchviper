@@ -16,11 +16,12 @@ from xradio.testing.measurement_set.io import download_measurement_set
 class TestLoadProcessingSet:
     """
     Tests for load_processing_set using real data
-    Adapted from:
+    Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/test_load_processing_set.py
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+    version = "xradio 1.0.2"
 
     MeasurementSet = "Antennae_North.cal.lsrk.split.ms"
     processing_set = "test_processing_set.ps.zarr"
@@ -29,7 +30,7 @@ class TestLoadProcessingSet:
         # perform the expensive operations once (per env, per commit), see
         # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions
 
-        # adapted from https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/conftest.py
+        # originally adapted from https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/conftest.py
 
         ms_path = download_measurement_set(self.MeasurementSet)
 
@@ -116,12 +117,13 @@ class TestLoadProcessingSet:
 class TestProcessingSetXdtWithData:
     """
     Benchmarks for ProcessingSetXdt using real data
-    Adapted from:
+    Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/test_processing_set_xdt.py
     TestProcessingSetXdtWithData class
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+    version = "xradio 1.0.2"
 
     MeasurementSet = "Antennae_North.cal.lsrk.split.ms"
     processing_set = "test_processing_set_xdt.ps.zarr"
@@ -130,7 +132,7 @@ class TestProcessingSetXdtWithData:
         # perform the expensive operations once (per env, per commit), see
         # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions
 
-        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py
+        # originally adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py
 
         ms_path = download_measurement_set(self.MeasurementSet)
 
@@ -198,12 +200,13 @@ class TestProcessingSetXdtWithData:
 class TestProcessingSetXdtWithEphemerisData:
     """
     Benchmarks for ProcessingSetXdt using real ephemeris data
-    Adapted from:
+    Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/test_processing_set_xdt.py
     TestProcessingSetXdtWithEphemerisData class
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+    version = "xradio 1.0.2"
 
     MeasurementSet = "ALMA_uid___A002_X1003af4_X75a3.split.avg.ms"
     processing_set = "test_processing_set_xdt_ephemeris.ps.zarr"
@@ -212,7 +215,7 @@ class TestProcessingSetXdtWithEphemerisData:
         # perform the expensive operations once (per env, per commit), see
         # https://asv.readthedocs.io/en/stable/writing_benchmarks.html#setup-and-teardown-functions
 
-        # adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py
+        # originally adapted from https://github.com/casangi/xradio/blob/main/tests/_utils/conftest.py
 
         ms_path = download_measurement_set(self.MeasurementSet)
 
@@ -254,12 +257,12 @@ class TestProcessingSetXdtWithEphemerisData:
 class TestMeasurementSetXdtWithData:
     """
     Benchmarks for MeasurementSetXdt using real data
-    Adapted from:
+    Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/measurement_set/test_measurement_set_xdt.py
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
-
     """
+    version = "xradio 1.0.2"
 
     def setup_cache(self):
         ms_path, _ = gen_minimal_ms()
