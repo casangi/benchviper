@@ -35,7 +35,7 @@
     // Customizable commands for installing and uninstalling the project.
     // See asv.conf.json documentation.
     //"install_command": ["in-dir={env_dir} python -m pip install {build_dir}/dist/*.whl"],
-    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}"],
+    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}[test]"],
     "uninstall_command": ["return-code=any python -m pip uninstall -y {project}"],
 
     // List of branches to benchmark. If not provided, defaults to "main"
