@@ -11,8 +11,3 @@ This file defines the workflow that runs daily to check for merge commits in xra
 This file defines the workflow that is triggered on demand to run only _the latest_ commit on a given development branch.
 
 See the documentation on the [`--skip-existing`](https://asv.readthedocs.io/en/stable/commands.html#asv-run) parameter for more details on how the `asv run` invocations interact with the results database.
-
-There is also one unused configuration file,
-
-### xradio-selfhost.yaml
-This workflow was used to test the configuration of a dedicated self-hosted runner located on premises at NRAO. This self-hosted runner is no longer active, so this workflow won't work even if it's manually triggered.
