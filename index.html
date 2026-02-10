@@ -37,7 +37,7 @@
             gap: 20px;
             margin-bottom: 50px;
         }
-        .project-link {
+        .project-link, .project-card {
             padding: 25px 30px;
             background: white;
             border-left: 4px solid #3498db;
@@ -57,16 +57,10 @@
             padding-left: 34px;
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
         }
-        .project-link.disabled {
+        .project-card {
             opacity: 0.6;
-            cursor: not-allowed;
+            cursor: default;
             background: #ecf0f1;
-        }
-        .project-link.disabled:hover {
-            background: #e0e4e6;
-            border-left-width: 4px;
-            padding-left: 30px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .arrow {
             color: #3498db;
@@ -103,13 +97,12 @@
                 <span>XRADIO</span>
                 <span class="arrow">→</span>
             </a>
-            <a href="astroviper-in-progress-v2.html" class="project-link disabled">
+            <div class="project-card">
                 <div>
                     <div>AstroVIPER</div>
                     <div class="status">In Progress</div>
                 </div>
-                <span class="arrow">→</span>
-            </a>
+            </div>
         </div>
         
         <div class="footer">
