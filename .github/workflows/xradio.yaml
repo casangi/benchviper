@@ -43,6 +43,14 @@ jobs:
         run: |
           cd xradio
           asv publish --verbose
+      - name: Deploy to GitHub Pages
+        if: "!cancelled() && github.ref == 'refs/heads/main'"
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./xradio/html
+          destination_dir: xradio
+          keep_files: true
       - name: Archive generated html
         uses: actions/upload-artifact@v4
         if: '!cancelled()'
