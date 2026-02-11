@@ -28,7 +28,7 @@ asv run "--merges v0.0.49..main" --machine gh-runner --parallel --interleave-rou
 # Note that the `--skip-existing` keyword has been omitted, so force the asv runner to re-run tests.
 ```
 
-After test results have been collected, the JSON results can be processed into static HTML using `asv publish`. This can be hosted locally using `asv preview`. Tracking of results on a dedicated `gh-pages` branch (using the [`asv gh-pages`](https://asv.readthedocs.io/en/stable/commands.html#asv-gh-pages) command) will [require a Github Enterprise license](https://docs.github.com/en/enterprise-cloud@latest/pages/getting-started-with-github-pages/changing-the-visibility-of-your-github-pages-site) unless the repository has Public visibility.
+After test results have been collected, the JSON results can be processed into static HTML using `asv publish`. This can be hosted locally using `asv preview`. Tracking of results on a dedicated `gh-pages` branch is implemented for this repository and deployed to [here](https://casangi.github.io/benchviper/).
 
 Dedication of an on-premises test machine connected to this repository as a self-hosted runner has been verified, but disabled pending migration to organization level deployment of [actions-runner-controller](https://docs.github.com/en/actions/concepts/runners/actions-runner-controller) runner pool.
 
