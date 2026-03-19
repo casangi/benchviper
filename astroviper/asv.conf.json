@@ -24,7 +24,6 @@
     "build_command": [
         "python -m pip install build",
         "python -m build --wheel",
-        "python -m pip install scikit-build-core",
         "python -m pip wheel --no-deps --no-build-isolation --no-index -w {build_cache_dir} {build_dir}"
     ],
     // To build the package using setuptools and a setup.py file, uncomment the following lines
