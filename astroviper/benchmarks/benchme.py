@@ -30,7 +30,7 @@ class TimeSuite:
     Benchmark that times various operations, including custom summation of
     lists.
     """
-
+    version = "astroviper 0.0.30"
     def setup(self):
         self.list1 = [i for i in range(500)]
         self.list2 = [i for i in range(500, 1000)]
