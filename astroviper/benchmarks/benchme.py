@@ -8,7 +8,7 @@ except ImportError:
 
 def add_arr(list1, list2):
     """
-    Summation of two lists. Uses NumPy if available, otherwise falls back to manual summation.
+    Summation of two lists. Uses NumPy if available, otherwise falls back to manual summation. 
 
     Parameters:
     - list1: First list of numbers.
