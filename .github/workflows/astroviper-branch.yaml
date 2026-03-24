@@ -2,9 +2,10 @@ name: Build and test astroviper branch with asv
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'astroviper/**' # The workflow runs only for changes in this directory 
     branches-ignore:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
