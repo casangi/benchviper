@@ -1,0 +1,59 @@
+name: Build and test astroviper with asv
+on:
+  workflow_dispatch:
+  schedule:
+     - cron: "00 12 * * *"
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - "3.12"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Build and test
+        run: |
+          # if environment_type "existing", install project and dependencies
+          # otherwise, just need asv and selected environment manager
+          pip install asv virtualenv
+          # benchviper organizes each external project in its own subdir
+          cd astroviper
+          asv machine --machine gh-runner --yes
+          asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+      - name: Push results
+        if: '!cancelled()'
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          if git status --porcelain astroviper/results/gh-runner/ | grep .; then
+            git add /home/runner/work/benchviper/benchviper/astroviper/results/gh-runner/
+            git commit -m "Automated push of results from github action"
+            git push
+          else
+            echo "No new results detected for gh-runner machine entry in asv database"
+          fi
+      - name: Build HTML
+        if: '!cancelled()'
+        run: |
+          cd astroviper
+          asv publish --verbose
+      - name: Deploy to GitHub Pages
+        if: "!cancelled() && github.ref == 'refs/heads/main'"
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./astroviper/html
+          destination_dir: astroviper
+          keep_files: true
+      - name: Archive generated html
+        uses: actions/upload-artifact@v4
+        if: '!cancelled()'
+        with:
+          name: publish-html
+          path: /home/runner/work/benchviper/benchviper/astroviper/html/*

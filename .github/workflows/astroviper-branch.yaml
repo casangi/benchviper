@@ -1,9 +1,9 @@
-name: Build and test xradio branch with asv
+name: Build and test astroviper branch with asv
 on:
   workflow_dispatch:
   push:
     paths:
-      - 'xradio/**' # The workflow runs only for changes in this directory
+      - 'astroviper/**' # The workflow runs only for changes in this directory 
     branches-ignore:
       - main
 jobs:
@@ -25,7 +25,7 @@ jobs:
           # otherwise, just need asv and selected environment manager
           pip install asv virtualenv
           # benchviper organizes each external project in its own subdir
-          cd xradio
+          cd astroviper
           asv machine --machine gh-runner --yes
           asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing
           asv publish
@@ -34,10 +34,10 @@ jobs:
         if: '!cancelled()'
         with:
           name: publish-results
-          path: /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/*.json
+          path: /home/runner/work/benchviper/benchviper/astroviper/results/gh-runner/*.json
       - name: Archive generated html
         uses: actions/upload-artifact@v4
         if: '!cancelled()'
         with:
           name: publish-html
-          path: /home/runner/work/benchviper/benchviper/xradio/html/*
+          path: /home/runner/work/benchviper/benchviper/astroviper/html/*
