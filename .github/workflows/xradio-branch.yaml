@@ -27,7 +27,7 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd xradio
           asv machine --machine gh-runner --yes
-          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing --verbose --show-stderr
           asv publish
       - name: Archive results
         uses: actions/upload-artifact@v4
