@@ -26,8 +26,6 @@ class TestLoadImage:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestLoadImage class
-    at commit:
-    HEAD
     """
 
     version = "xradio 1.0.2"
@@ -76,8 +74,6 @@ class TestOpenImageCasa:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestOpenImageCasa class
-    at commit:
-    HEAD
     """
 
     version = "xradio 1.0.2"
@@ -117,8 +113,6 @@ class TestWriteImageCasa:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestWriteImageCasa class
-    at commit:
-    HEAD
     """
 
     version = "xradio 1.0.2"
@@ -189,8 +183,6 @@ class TestCasaRoundtrip:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestCasaRoundtrip class
-    at commit:
-    HEAD
 
     Each benchmark performs the complete open + write in a single method,
     mirroring TestCasaRoundtrip.setup_class in the original tests which calls
@@ -267,8 +259,6 @@ class TestZarrRoundtrip:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestZarrRoundtrip class
-    at commit:
-    HEAD
 
     Each benchmark performs write_image and the subsequent open_image in the
     same method, mirroring how the original TestZarrRoundtrip.setup_class calls
@@ -343,8 +333,6 @@ class TestWriteImageZarr:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestWriteImageZarr class
-    at commit:
-    HEAD
     """
 
     version = "xradio 1.0.2"
@@ -392,8 +380,6 @@ class TestOpenImageFits:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestOpenImageFits class
-    at commit:
-    HEAD
     """
 
     version = "xradio 1.0.2"
@@ -441,8 +427,6 @@ class TestMakeEmptyImages:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/image/test_image.py
     TestMakeEmptyImages class
-    at commit:
-    HEAD
     """
 
     version = "xradio 1.0.2"
