@@ -15,7 +15,6 @@ from xradio.image import (
 from xradio.image._util._casacore.common import _create_new_image as create_new_image
 from xradio.testing.image import (
     create_empty_test_image,
-    download_and_open_image,
     download_image,
     remove_path,
 )
@@ -128,7 +127,7 @@ class TestWriteImageCasa:
     # gets its own setup()/teardown() cycle so the output path is always clean.
     # Before measuring, asv will call the function multiple times during the warmup_time window.
     # teardown does not run between the warmup runs, therefore it needs to be set to 0.0
-    # to avoid overwritting output_uv.im in time_write_image_uv
+    # to avoid overwriting output_uv.im in time_write_image_uv
     number = 1
     warmup_time = 0
 
