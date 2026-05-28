@@ -24,6 +24,7 @@ jobs:
           pip install asv virtualenv
           # benchviper organizes each external project in its own subdir
           cd xradio
+          rm -rf ./results/gh-runner/0c50fe6d-virtualenv-py3.12-python-casacore3.7.1.json
           asv rm -y commit_hash=0c50fe6d
           asv machine --machine gh-runner --yes
           asv run --verbose "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
