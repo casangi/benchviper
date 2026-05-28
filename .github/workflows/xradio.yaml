@@ -24,15 +24,7 @@ jobs:
           pip install asv virtualenv
           # benchviper organizes each external project in its own subdir
           cd xradio
-          
-          rm -rf ./results/gh-runner/0c50fe6d-virtualenv-py3.12-python-casacore3.7.1.json
-          rm -rf ./results/gh-runner/5b1d9ce8-virtualenv-py3.12-python-casacore3.7.1.json
-          rm -rf ./results/gh-runner/9f6bc66b-virtualenv-py3.12-python-casacore3.7.1.json
-          rm -rf ./results/gh-runner/7760704c-virtualenv-py3.12-python-casacore3.7.1.json
-          rm -rf ./results/gh-runner/1df47d9b-virtualenv-py3.12-python-casacore3.7.1.json
-          rm -rf ./results/gh-runner/13873f1b-virtualenv-py3.12-python-casacore3.7.1.json
-          rm -rf ./results/gh-runner/0f9957e5-virtualenv-py3.12-python-casacore3.7.1.json
-          
+   
           asv machine --machine gh-runner --yes
           
           asv rm -y commit_hash=0c50fe6d
@@ -43,13 +35,13 @@ jobs:
           asv rm -y commit_hash=13873f1b
           asv rm -y commit_hash=0f9957e5
           
-          asv run --verbose --machine gh-runner 0c50fe6d^!
-          asv run --verbose --machine gh-runner 5b1d9ce8^!
-          asv run --verbose --machine gh-runner 9f6bc66b^!
-          asv run --verbose --machine gh-runner 7760704c^!
-          asv run --verbose --machine gh-runner 1df47d9b^!
-          asv run --verbose --machine gh-runner 13873f1b^!
-          asv run --verbose --machine gh-runner 0f9957e5^!
+          #asv run --verbose --machine gh-runner 0c50fe6d^!
+          #asv run --verbose --machine gh-runner 5b1d9ce8^!
+          #asv run --verbose --machine gh-runner 9f6bc66b^!
+          #asv run --verbose --machine gh-runner 7760704c^!
+          #asv run --verbose --machine gh-runner 1df47d9b^!
+          #asv run --verbose --machine gh-runner 13873f1b^!
+          #asv run --verbose --machine gh-runner 0f9957e5^!
           
           asv run "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
       - name: Push results
