@@ -24,8 +24,9 @@ jobs:
           pip install asv virtualenv
           # benchviper organizes each external project in its own subdir
           cd xradio
+          asv rm -y commit_hash=0c50fe6d
           asv machine --machine gh-runner --yes
-          asv run "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv run --verbose "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
           
       - name: Push results
         if: '!cancelled()'
