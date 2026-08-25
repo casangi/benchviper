@@ -107,7 +107,7 @@
     // },
     "matrix": {
         "req": {
-            "python-casacore": ["3.7.1"],
+            "arcae": ["0.5.4"],
         },
     },
 
