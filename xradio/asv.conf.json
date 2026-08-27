@@ -108,6 +108,7 @@
     "matrix": {
         "req": {
             "arcae": ["0.5.4"],
+            "python-casacore": ["3.7.1"]
         },
     },
 
