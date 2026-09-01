@@ -17,6 +17,16 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          
+      - name: Install GCC 14
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y "gcc-14" "g++-14"
+          # Make the requested compiler the one CMake/scikit-build-core picks up
+          # for the pip build below (env persists to later steps via GITHUB_ENV).
+          echo "CC=gcc-14" >> "$GITHUB_ENV"
+          echo "CXX=g++-14" >> "$GITHUB_ENV"
+          "g++-14" --version
       - name: Build and test
         run: |
           # if environment_type "existing", install project and dependencies
