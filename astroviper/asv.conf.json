@@ -1,4 +1,5 @@
 {
+    "return_code": 0,
     // The version of the config file format.  Do not change, unless
     // you know what you are doing.
     "version": 1,
