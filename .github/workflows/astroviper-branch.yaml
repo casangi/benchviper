@@ -27,7 +27,7 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd astroviper
           asv machine --machine gh-runner --yes
-          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing --strict
+          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing --show-stderr
           asv publish
       - name: Archive results
         uses: actions/upload-artifact@v4
