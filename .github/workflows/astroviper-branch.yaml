@@ -19,6 +19,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: actions/checkout@v4
+      - name: Install GCC 14
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y "gcc-14" "g++-14"
+          # Make the requested compiler the one CMake/scikit-build-core picks up
+          # for the pip build below (env persists to later steps via GITHUB_ENV).
+          echo "CC=gcc-14" >> "$GITHUB_ENV"
+          echo "CXX=g++-14" >> "$GITHUB_ENV"
+          "g++-14" --version
       - name: Build and test
         run: |
           # if environment_type "existing", install project and dependencies
@@ -27,7 +36,7 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd astroviper
           asv machine --machine gh-runner --yes
-          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing --show-stderr
           asv publish
       - name: Archive results
         uses: actions/upload-artifact@v4
