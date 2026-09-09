@@ -35,7 +35,8 @@
     // Customizable commands for installing and uninstalling the project.
     // See asv.conf.json documentation.
     //"install_command": ["in-dir={env_dir} python -m pip install {build_dir}/dist/*.whl"],
-    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}[all]"],
+    //"install_command": ["in-dir={env_dir} python -m pip install {wheel_file}[all]"],
+    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}[casacore,test]"]
     "uninstall_command": ["return-code=any python -m pip uninstall -y {project}"],
 
     // List of branches to benchmark. If not provided, defaults to "main"
@@ -105,11 +106,11 @@
     //     "env": {"ENV_VAR_1": ["val1", "val2"]},
     //     "env_nobuild": {"ENV_VAR_2": ["val3", null]},
     // },
-    "matrix": {
-        "req": {
-            "python-casacore": ["3.7.1"],
-        },
-    },
+    // "matrix": {
+    //     "req": {
+    //         "python-casacore": ["3.7.1"],
+    //     },
+    // },
 
     // Combinations of libraries/python versions can be excluded/included
     // from the set to test. Each entry is a dictionary containing additional
