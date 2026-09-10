@@ -34,7 +34,13 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd astroviper
           asv machine --machine gh-runner --yes
-          asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing --show-stderr | tee asv_run.log
+          
+          # Check the log file for common ASV build failure indicators
+          if grep -E "Backend subprocess exited when trying to invoke build_wheel|Failed to build|benchmark failed" asv_run.log; then
+            echo "::error::One or more commits failed to build during benchmarking."
+            exit 1
+          fi
       - name: Push results
         if: '!cancelled()'
         run: |
