@@ -34,7 +34,7 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd astroviper
           asv machine --machine gh-runner --yes
-          asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful --verbose
       - name: Push results
         if: "!cancelled() && github.ref == 'refs/heads/main'"
         run: |
