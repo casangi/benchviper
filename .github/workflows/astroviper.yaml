@@ -36,7 +36,7 @@ jobs:
           asv machine --machine gh-runner --yes
           asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
       - name: Push results
-        if: '!cancelled()'
+        if: "!cancelled() && github.ref == 'refs/heads/main'"
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
