@@ -1,7 +1,7 @@
 import numpy as np
 
-from astroviper.core.imaging.fft import fft_lm_to_uv
-from astroviper.core.imaging.ifft import ifft_uv_to_lm
+from astroviper.processing_functions.imaging.fft_normalize_prolate_spheriodal_gridder import fft_lm_to_uv
+from astroviper.processing_functions.imaging.fft_normalize_prolate_spheriodal_gridder import ifft_uv_to_lm
 
 
 class TestFFTiFFT:
