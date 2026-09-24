@@ -25,7 +25,7 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd xradio
           asv machine --machine gh-runner --yes
-          asv run --verbose "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing
+          asv run --verbose "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
           
       - name: Push results
         if: "!cancelled() && github.ref == 'refs/heads/main'"
