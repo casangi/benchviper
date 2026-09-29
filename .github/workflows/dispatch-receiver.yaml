@@ -33,7 +33,7 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             workflow_id: 'astroviper.yaml',
-            ref: 'main',
+            ref: '3-implement-a-repository-dispatch-to-run-the-tests-automatically',
             inputs: {
               'source_repository': payload.repository || '',
               'source_ref': payload.ref || '',
