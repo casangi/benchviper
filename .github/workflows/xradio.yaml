@@ -1,6 +1,6 @@
 name: Build and test xradio with asv
-on:
-    workflow_dispatch:
+'on':
+  workflow_dispatch:
     inputs:
       source_repository:
         description: 'Source repository that triggered the dispatch'

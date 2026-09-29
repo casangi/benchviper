@@ -1,6 +1,6 @@
 name: Dispatch Receiver - Benchmark Test Trigger
 
-on:
+'on':
   # Listen for repository dispatch events from other repositories
   repository_dispatch:
     types: [benchmark-test-trigger]

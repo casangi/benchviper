@@ -1,5 +1,5 @@
 name: Build and test astroviper with asv
-on:
+'on':
   workflow_dispatch:
     inputs:
       source_repository:
