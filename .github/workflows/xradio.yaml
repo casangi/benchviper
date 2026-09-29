@@ -1,8 +1,39 @@
 name: Build and test xradio with asv
 on:
-  workflow_dispatch:
-  schedule:
-     - cron: "00 12 * * *"
+    workflow_dispatch:
+    inputs:
+      source_repository:
+        description: 'Source repository that triggered the dispatch'
+        required: false
+        type: string
+      source_ref:
+        description: 'Source branch/ref that triggered the dispatch'
+        required: false
+        type: string
+      source_sha:
+        description: 'Source commit SHA that triggered the dispatch'
+        required: false
+        type: string
+      source_actor:
+        description: 'Source actor that triggered the dispatch'
+        required: false
+        type: string
+      source_workflow:
+        description: 'Source workflow that triggered the dispatch'
+        required: false
+        type: string
+      source_run_id:
+        description: 'Source run ID that triggered the dispatch'
+        required: false
+        type: string
+      source_run_number:
+        description: 'Source run number that triggered the dispatch'
+        required: false
+        type: string
+      triggered_by:
+        description: 'How this workflow was triggered'
+        required: false
+        type: string
 permissions:
   contents: write
 jobs:
@@ -11,8 +42,20 @@ jobs:
     strategy:
       matrix:
         python-version:
-          - "3.12"
+          - "3.13"
     steps:
+      - name: Log dispatch information
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Workflow triggered by repository dispatch"
+          echo "Source repository: ${{ github.event.inputs.source_repository }}"
+          echo "Source ref: ${{ github.event.inputs.source_ref }}"
+          echo "Source SHA: ${{ github.event.inputs.source_sha }}"
+          echo "Source actor: ${{ github.event.inputs.source_actor }}"
+          echo "Source workflow: ${{ github.event.inputs.source_workflow }}"
+          echo "Source run ID: ${{ github.event.inputs.source_run_id }}"
+          echo "Source run number: ${{ github.event.inputs.source_run_number }}"
+          echo "Triggered by: ${{ github.event.inputs.triggered_by }}"
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v6
         with:
@@ -25,7 +68,7 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd xradio
           asv machine --machine gh-runner --yes
-          asv run --verbose "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
+          asv run --verbose "--merges main~3..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
           
       - name: Push results
         if: "!cancelled() && github.ref == 'refs/heads/main'"
