@@ -77,7 +77,13 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd astroviper
           asv machine --machine gh-runner --yes
-          asv run "--merges main~3..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            # If triggered by a dispatch, run the last 3 commits on main
+            asv run "--merges main~3..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
+          else
+            # Otherwise, run from the v0.0.30 tag to main 
+            asv run "--merges v0.0.30..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
+          fi
       - name: Push results
         if: "!cancelled() && github.ref == 'refs/heads/main'"
         run: |
