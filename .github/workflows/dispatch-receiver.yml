@@ -74,3 +74,25 @@ jobs:
           });
           
           console.log('Successfully triggered xradio workflow');
+    
+   # - name: Notify source repository of workflow trigger
+   #   uses: actions/github-script@v6
+   #   with:
+   #     github-token: ${{ secrets.TESTVIPER_DISPATCH_TOKEN }}
+   #     script: |
+   #       const payload = context.payload.client_payload;
+   #       
+   #       // Post a status check back to the source repository
+   #       if (payload && payload.repository && payload.sha) {
+   #         const [owner, repo] = payload.repository.split('/');
+   #         
+   #         await github.rest.repos.createCommitStatus({
+   #           owner: owner,
+   #           repo: repo,
+   #           sha: payload.sha,
+   #           state: 'pending',
+   #           context: 'Benchmark Tests (benchviper)',
+   #           description: 'Benchmark tests workflow triggered',
+   #           target_url: `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`
+   #         });
+   #       }
