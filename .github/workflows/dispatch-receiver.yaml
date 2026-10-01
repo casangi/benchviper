@@ -22,7 +22,7 @@ jobs:
         echo "Component to trigger: ${{ github.event.client_payload.component }}"
 
     - name: Trigger astroviper workflow
-      if: github.event.client_payload.component == 'astroviper'
+      if: contains(github.event.client_payload.component, 'astroviper')
       uses: actions/github-script@v6
       with:
         script: |
@@ -49,7 +49,7 @@ jobs:
           console.log('Successfully triggered astroviper workflow'); 
 
     - name: Trigger xradio workflow
-      if: github.event.client_payload.component == 'xradio'
+      if: contains(github.event.client_payload.component, 'xradio')
       uses: actions/github-script@v6
       with:
         script: |
