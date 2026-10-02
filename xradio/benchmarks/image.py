@@ -1,9 +1,9 @@
-import numpy as np
-import numpy.ma as ma
 import os
 import shutil
 import tempfile
 
+import numpy as np
+import numpy.ma as ma
 from xradio.image import (
     load_image,
     make_empty_aperture_image,
@@ -148,7 +148,6 @@ class TestWriteImageCasa:
         self.xds_uv = cache["xds_uv"]
         self.tmp_dir = tempfile.mkdtemp()
 
-
     def teardown(self, cache):
         shutil.rmtree(self.tmp_dir, ignore_errors=False)
 
@@ -167,7 +166,7 @@ class TestWriteImageCasa:
             self.xds_uv,
             os.path.join(self.tmp_dir, "output_uv.im"),
             "casa",
-            overwrite=False
+            overwrite=False,
         )
 
     def time_write_image_overwrite(self, cache):
@@ -289,7 +288,9 @@ class TestZarrRoundtrip:
         xds = open_image(self._imname, {"frequency": 5})
         xds_with_beam = xds.assign(BEAM_FIT_PARAMS=make_beam_fit_params(xds))
         xds_with_beam["BEAM_FIT_PARAMS"].attrs["units"] = "rad"
-        write_image(xds_with_beam, self._zarr_beam_test, out_format="zarr", overwrite=True)
+        write_image(
+            xds_with_beam, self._zarr_beam_test, out_format="zarr", overwrite=True
+        )
         bds = open_image(self._zarr_beam_test)
         return {
             "imname": self._imname,

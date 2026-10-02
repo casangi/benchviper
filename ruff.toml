@@ -1,0 +1,22 @@
+# Same rule set as the VIPER packages (toolviper, xradio, graphviper,
+# astroviper):
+#   E4/E7/E9 -- pycodestyle errors (import placement, statement syntax, runtime)
+#   F        -- pyflakes: undefined names, unused imports, unused variables
+#   B        -- flake8-bugbear: likely bugs (mutable defaults, loop captures, ...)
+#   UP       -- pyupgrade: outdated syntax/typing
+#   I        -- isort-compatible import sorting
+target-version = "py311"
+# asv's per-project environments and results.
+extend-exclude = ["*/env", "*/results", "*/html"]
+
+[lint]
+select = ["E4", "E7", "E9", "F", "B", "UP", "I"]
+
+[lint.per-file-ignores]
+# asv benchmarks run against many historical xradio/astroviper commits:
+# - F841: timed calls assign their result on purpose (keeps the work from
+#   being optimised away / documents what is measured).
+# - UP007/UP045: the schema benchmarks define xradio schema dataclasses whose
+#   annotations xradio introspects; keep typing.Optional/Union spellings so
+#   older xradio versions still understand them.
+"*/benchmarks/*" = ["F841", "UP007", "UP045"]

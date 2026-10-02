@@ -1,6 +1,5 @@
 import numpy as np
 import xarray as xr
-
 from xradio.image import make_empty_sky_image
 from xradio.testing.image import create_empty_test_image
 
@@ -90,7 +89,7 @@ class TestImageXdsAccessor:
         """Benchmark add_uv_coordinates attaching u and v coords to the dataset."""
         # Note: internally in the xradio image_xds source code, assign_coords is called to
         # assign u,v and it does not mutate the xr.Dataset object. The second time it
-        # runs, it reassigns self.xds on the accessor instance of xds.xr.image. 
+        # runs, it reassigns self.xds on the accessor instance of xds.xr.image.
         # For timing purposes, this does not matter much here.
         xds.xr_img.add_uv_coordinates()
 
