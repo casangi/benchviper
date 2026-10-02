@@ -36,6 +36,11 @@ name: Build and test astroviper with asv
         type: string
 permissions:
   contents: write
+# Serialize runs: each one commits and pushes asv results to main, and a 3-Python
+# run takes long enough for overlapping dispatches to race on that push.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -56,10 +61,19 @@ jobs:
           echo "Source run ID: ${{ github.event.inputs.source_run_id }}"
           echo "Source run number: ${{ github.event.inputs.source_run_number }}"
           echo "Triggered by: ${{ github.event.inputs.triggered_by }}"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
-          python-version: ${{ matrix.python-version }}
+          # asv's virtualenv plugin needs every interpreter listed in
+          # asv.conf.json "pythons" on PATH (it silently skips a missing one).
+          # The last version listed becomes the default `python`, which runs
+          # asv itself.
+          python-version: |
+            3.12
+            3.14
+            ${{ matrix.python-version }}
+      - name: Check the asv interpreters are available
+        run: python3.12 -V && python3.13 -V && python3.14 -V
       - name: Install GCC 14
         run: |
           sudo apt-get update
@@ -110,7 +124,7 @@ jobs:
           destination_dir: astroviper
           keep_files: true
       - name: Archive generated html
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: '!cancelled()'
         with:
           name: publish-html

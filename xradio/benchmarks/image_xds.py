@@ -1,6 +1,5 @@
 import numpy as np
 import xarray as xr
-
 from xradio.image import make_empty_sky_image
 from xradio.testing.image import create_empty_test_image
 
@@ -90,9 +89,13 @@ class TestImageXdsAccessor:
         """Benchmark add_uv_coordinates attaching u and v coords to the dataset."""
         # Note: internally in the xradio image_xds source code, assign_coords is called to
         # assign u,v and it does not mutate the xr.Dataset object. The second time it
-        # runs, it reassigns self.xds on the accessor instance of xds.xr.image. 
+        # runs, it reassigns self.xds on the accessor instance of xds.xr.image.
         # For timing purposes, this does not matter much here.
-        xds.xr_img.add_uv_coordinates()
+        # Keep the returned Dataset alive: add_uv_coordinates() rebinds the
+        # accessor cached on ``xds`` to it, and since xradio 1.2.3 that binding
+        # is a weak reference (casangi/xradio 53faa96e). Discarding the result
+        # makes the next ``xds.xr_img`` call (e.g. in setup) raise ReferenceError.
+        self.xds_with_uv = xds.xr_img.add_uv_coordinates()
 
     def time_get_uv_in_lambda(self, xds):
         """Benchmark get_uv_in_lambda converting uv coordinates to wavelengths."""
