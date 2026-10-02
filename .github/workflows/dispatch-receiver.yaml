@@ -23,7 +23,7 @@ jobs:
 
     - name: Trigger astroviper workflow
       if: contains(github.event.client_payload.component, 'astroviper')
-      uses: actions/github-script@v6
+      uses: actions/github-script@v9
       with:
         script: |
           const payload = context.payload.client_payload;
@@ -50,7 +50,7 @@ jobs:
 
     - name: Trigger xradio workflow
       if: contains(github.event.client_payload.component, 'xradio')
-      uses: actions/github-script@v6
+      uses: actions/github-script@v9
       with:
         script: |
           const payload = context.payload.client_payload;

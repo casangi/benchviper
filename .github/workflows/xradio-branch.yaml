@@ -1,4 +1,7 @@
 name: Build and test xradio branch with asv
+# Push to a branch: benchmark the Python 3.13 environment only.
+# Pull request / manual run: every environment in xradio/asv.conf.json
+# (Python 3.12, 3.13 and 3.14).
 on:
   workflow_dispatch:
   push:
@@ -6,6 +9,14 @@ on:
       - 'xradio/**' # The workflow runs only for changes in this directory
     branches-ignore:
       - main
+  pull_request:
+    paths:
+      - 'xradio/**'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,12 +25,26 @@ jobs:
         python-version:
           - "3.13"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
-          python-version: ${{ matrix.python-version }}
-      - uses: actions/checkout@v4
+          # asv's virtualenv plugin needs every interpreter listed in
+          # asv.conf.json "pythons" on PATH (it silently skips a missing one).
+          # The last version listed becomes the default `python`, which runs
+          # asv itself.
+          python-version: |
+            3.12
+            3.14
+            ${{ matrix.python-version }}
+      - name: Check the asv interpreters are available
+        run: python3.12 -V && python3.13 -V && python3.14 -V
       - name: Build and test
+        env:
+          # Older xradio commits pin numcodecs<0.16, which has no cp314 wheel;
+          # its bundled c-blosc does not compile as C23 (GCC >= 15's default).
+          CFLAGS: "-std=gnu17"
+          # On a branch push only the 3.13 environment is benchmarked.
+          ASV_ENV_ARGS: ${{ github.event_name == 'push' && '-E virtualenv:3.13' || '' }}
         run: |
           # if environment_type "existing", install project and dependencies
           # otherwise, just need asv and selected environment manager
@@ -27,16 +52,17 @@ jobs:
           # benchviper organizes each external project in its own subdir
           cd xradio
           asv machine --machine gh-runner --yes
-          asv run HEAD^1..HEAD --machine gh-runner --parallel --interleave-rounds --skip-existing --verbose --show-stderr
+          # shellcheck disable=SC2086  # ASV_ENV_ARGS is empty or "-E virtualenv:3.13"
+          asv run HEAD^1..HEAD $ASV_ENV_ARGS --machine gh-runner --parallel --interleave-rounds --skip-existing --verbose --show-stderr
           asv publish --verbose
       - name: Archive results
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: '!cancelled()'
         with:
           name: publish-results
           path: /home/runner/work/benchviper/benchviper/xradio/results/gh-runner/*.json
       - name: Archive generated html
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: '!cancelled()'
         with:
           name: publish-html

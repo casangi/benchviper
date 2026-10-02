@@ -13,7 +13,13 @@ The workflow also deploys benchmark results to GitHub Pages at `https://[org].gi
 - Uses `keep_files: true` to preserve benchmark results from other projects
 
 ### xradio-branch.yaml
-This file defines the workflow that is triggered on demand to run only _the latest_ commit on a given development branch.
+This file defines the workflow that is triggered on demand to run only _the latest_ commit on a given development branch. A push to a branch benchmarks only the Python 3.13 environment; a pull request or manual run benchmarks every environment.
+
+### Python versions
+Both `asv.conf.json` files benchmark Python 3.12, 3.13 and 3.14 (`"pythons"`), so each workflow installs all three interpreters with `actions/setup-python` (asv's virtualenv plugin silently skips an interpreter it cannot find on `PATH`). The 3.14 environment uses python-casacore 3.8.1 (3.7.1 has no 3.14 wheel) and sets `PIP_IGNORE_REQUIRES_PYTHON=1`, because historical xradio/astroviper commits declare `requires-python` "<3.14".
+
+### lint.yml
+Runs `ruff check` and `ruff format --check` (configuration in `ruff.toml`) on every push and pull request, through the shared `ruff-template.yml` in `nrao/gh-actions-templates-public`.
 
 ### Future Projects
 When adding benchmarks for additional projects (e.g., astroviper), create a new workflow file following the same pattern:
