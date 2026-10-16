@@ -15,7 +15,7 @@ asv quickstart
 # configured to use "standalone repo" option, which creates asv.conf.json
 ```
 > [!NOTE]
-> For `xradio`, the environment building commands disqualify running benchmarks using [asv's environment isolation](https://asv.readthedocs.io/en/latest/using.html#environments) on macOS (unless "environment_type" is set to "existing"). This is due to the dependencies requiring pre-installation of `python-casacore` from conda-forge before running the regular wheel building commands (which still to be [specified](https://pip.pypa.io/en/stable/reference/build-system/pyproject-toml/#build-time-dependencies) in [xradio/pyproject.toml](https://github.com/casangi/xradio/blob/main/pyproject.toml)).
+> For `xradio`, the environment building commands disqualify running benchmarks using [asv's environment isolation](https://asv.readthedocs.io/en/latest/using.html#environments) on macOS (unless "environment_type" is set to "existing"). The `asv.conf.json` matrix installs `python-casacore`, which has wheels for Linux x86_64 only, because XRADIO commits before 1.3.0 read casacore tables with it. From 1.3.0, XRADIO uses [arcae](https://github.com/ska-sa/arcae) instead, which its `[all]` extra installs from pip on Linux and macOS.
 
 ## Running and publishing benchmarks
 
