@@ -1,9 +1,9 @@
-import numpy as np
-import numpy.ma as ma
 import os
 import shutil
 import tempfile
 
+import numpy as np
+import numpy.ma as ma
 from xradio.image import (
     load_image,
     make_empty_aperture_image,
@@ -148,7 +148,6 @@ class TestWriteImageCasa:
         self.xds_uv = cache["xds_uv"]
         self.tmp_dir = tempfile.mkdtemp()
 
-
     def teardown(self, cache):
         shutil.rmtree(self.tmp_dir, ignore_errors=False)
 
@@ -167,7 +166,7 @@ class TestWriteImageCasa:
             self.xds_uv,
             os.path.join(self.tmp_dir, "output_uv.im"),
             "casa",
-            overwrite=False
+            overwrite=False,
         )
 
     def time_write_image_overwrite(self, cache):
@@ -276,7 +275,11 @@ class TestZarrRoundtrip:
     warmup_time = 0
 
     _imname = "casa_test_image.im"
-    _zarr_beam_test = "bench_beam_test.zarr"
+    # Since xradio 1.2.5, write_image gives a zarr image store the extension
+    # .img.zarr (out.zarr is written as out.img.zarr), and open_image opens the
+    # path it is given. Every xradio version keeps a name that already ends in
+    # .img.zarr, so the stores below are reopened under the name written.
+    _zarr_beam_test = "bench_beam_test.img.zarr"
 
     def setup_cache(self):
         # perform the expensive operations once (per env, per commit), see
@@ -289,7 +292,9 @@ class TestZarrRoundtrip:
         xds = open_image(self._imname, {"frequency": 5})
         xds_with_beam = xds.assign(BEAM_FIT_PARAMS=make_beam_fit_params(xds))
         xds_with_beam["BEAM_FIT_PARAMS"].attrs["units"] = "rad"
-        write_image(xds_with_beam, self._zarr_beam_test, out_format="zarr", overwrite=True)
+        write_image(
+            xds_with_beam, self._zarr_beam_test, out_format="zarr", overwrite=True
+        )
         bds = open_image(self._zarr_beam_test)
         return {
             "imname": self._imname,
@@ -312,7 +317,7 @@ class TestZarrRoundtrip:
 
     def time_zarr_roundtrip(self, cache):
         """Benchmark write_image (zarr) + open_image (zarr) for a CASA-derived dataset."""
-        zarr_out = os.path.join(self.tmp_dir, "out.zarr")
+        zarr_out = os.path.join(self.tmp_dir, "out.img.zarr")
         write_image(self.xds, zarr_out, out_format="zarr")
         open_image(zarr_out)
 
@@ -320,9 +325,9 @@ class TestZarrRoundtrip:
         """Benchmark write_image (zarr) + open_image (zarr) using a pre-built beam-parameter store.
 
         Corresponds to test_beam in the original TestZarrRoundtrip class, using the
-        bench_beam_test.zarr (_zarr_beam_test) source created in setup_cache.
+        bench_beam_test.img.zarr (_zarr_beam_test) source created in setup_cache.
         """
-        beam_test_out = os.path.join(self.tmp_dir, "out_beam_test.zarr")
+        beam_test_out = os.path.join(self.tmp_dir, "out_beam_test.img.zarr")
         write_image(self.bds, beam_test_out, out_format="zarr")
         open_image(beam_test_out)
 
@@ -369,7 +374,7 @@ class TestWriteImageZarr:
         """Benchmark write_image writing a UV aperture image to zarr."""
         write_image(
             self.xds_uv,
-            os.path.join(self.tmp_dir, "out_uv.zarr"),
+            os.path.join(self.tmp_dir, "out_uv.img.zarr"),
             "zarr",
         )
 

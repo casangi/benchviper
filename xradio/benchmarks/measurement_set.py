@@ -1,16 +1,15 @@
-import shutil
 import xarray as xr
-
 from xradio.measurement_set import load_processing_set
-from xradio.schema.check import check_datatree
-from xradio.measurement_set.processing_set_xdt import ProcessingSetXdt
-from xradio.testing.measurement_set.msv2_io import (
-    gen_minimal_ms,
-    build_processing_set_from_msv2,
-    build_minimal_msv4_xdt
+from xradio.measurement_set.processing_set_xdt import (
+    ProcessingSetXdt,  # noqa: F401  (registers the .xr_ps accessor)
 )
+from xradio.schema.check import check_datatree
 from xradio.testing.measurement_set.io import download_measurement_set
-
+from xradio.testing.measurement_set.msv2_io import (
+    build_minimal_msv4_xdt,
+    build_processing_set_from_msv2,
+    gen_minimal_ms,
+)
 
 
 class TestLoadProcessingSet:
@@ -21,6 +20,7 @@ class TestLoadProcessingSet:
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+
     version = "xradio 1.0.2"
 
     MeasurementSet = "Antennae_North.cal.lsrk.split.ms"
@@ -70,13 +70,15 @@ class TestLoadProcessingSet:
         expected_names = [f"{ms_basename}_{i}" for i in range(4)]  # 0 to 3
         ms_names = list(full_ps.children.keys())
 
-        assert len(ms_names) == len(
-            expected_names
-        ), "Number of measurement sets doesn't match"
-        for ms_name, expected_name in zip(sorted(ms_names), sorted(expected_names)):
-            assert (
-                ms_name == expected_name
-            ), f"Expected {expected_name} but got {ms_name}"
+        assert len(ms_names) == len(expected_names), (
+            "Number of measurement sets doesn't match"
+        )
+        for ms_name, expected_name in zip(
+            sorted(ms_names), sorted(expected_names), strict=True
+        ):
+            assert ms_name == expected_name, (
+                f"Expected {expected_name} but got {ms_name}"
+            )
 
         # Test loading with selection parameters
         sel_parms = {ms_name: {"time": slice(0, 10)}}
@@ -123,6 +125,7 @@ class TestProcessingSetXdtWithData:
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+
     version = "xradio 1.0.2"
 
     MeasurementSet = "Antennae_North.cal.lsrk.split.ms"
@@ -206,6 +209,7 @@ class TestProcessingSetXdtWithEphemerisData:
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+
     version = "xradio 1.0.2"
 
     MeasurementSet = "ALMA_uid___A002_X1003af4_X75a3.split.avg.ms"
@@ -262,6 +266,7 @@ class TestMeasurementSetXdtWithData:
     at commit:
     b1618b0fa08a3e657dff8905eb93d298717b7ae5
     """
+
     version = "xradio 1.0.2"
 
     def setup_cache(self):
@@ -289,13 +294,13 @@ class TestMeasurementSetXdtWithData:
         self.ms_xdt.add_data_group(
             "test_added_data_group_with_param_values",
             {
-                "correlated_data":"VISIBILITY",
-                "weight":"EFFECTIVE_INTEGRATION_TIME",
-                "flag":"FLAG",
-                "uvw":"UVW",
-                "field_and_source_xds":"field_and_source_base_xds",
-                "date_time":"today, now",
-                "description":"a test data group",
+                "correlated_data": "VISIBILITY",
+                "weight": "EFFECTIVE_INTEGRATION_TIME",
+                "flag": "FLAG",
+                "uvw": "UVW",
+                "field_and_source_xds": "field_and_source_base_xds",
+                "date_time": "today, now",
+                "description": "a test data group",
             },
             data_group_dv_shared_with="base",
         )

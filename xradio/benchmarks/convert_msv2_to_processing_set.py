@@ -1,9 +1,9 @@
 import shutil
-import xarray as xr
 
+import xarray as xr
 from xradio.measurement_set import (
-    estimate_conversion_memory_and_cores,
     convert_msv2_to_processing_set,
+    estimate_conversion_memory_and_cores,
     open_processing_set,
 )
 from xradio.schema.check import check_datatree

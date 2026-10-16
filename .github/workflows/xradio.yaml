@@ -36,13 +36,14 @@ name: Build and test xradio with asv
         type: string
 permissions:
   contents: write
+# Serialize runs: each one commits and pushes asv results to main, and a 3-Python
+# run takes long enough for overlapping dispatches to race on that push.
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version:
-          - "3.13"
     steps:
       - name: Log dispatch information
         if: github.event_name == 'workflow_dispatch'
@@ -56,11 +57,38 @@ jobs:
           echo "Source run ID: ${{ github.event.inputs.source_run_id }}"
           echo "Source run number: ${{ github.event.inputs.source_run_number }}"
           echo "Triggered by: ${{ github.event.inputs.triggered_by }}"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v6
+      - uses: actions/checkout@v7
+      - name: Read the Pythons in asv.conf.json
+        id: asv-pythons
+        run: |
+          # asv benchmarks one environment per Python in the "pythons" list of
+          # asv.conf.json. The file allows // comments, so only that list is parsed.
+          python3 - xradio/asv.conf.json >> "$GITHUB_OUTPUT" <<'PY'
+          import json
+          import re
+          import sys
+
+          text = re.sub(r"(?m)^\s*//.*$", "", open(sys.argv[1]).read())
+          found = re.search(r'"pythons"\s*:\s*(\[[^\]]*\])', text)
+          if found is None:
+              sys.exit(f'No "pythons" list in {sys.argv[1]}')
+          print("versions<<PYTHONS", *json.loads(found[1]), "PYTHONS", sep="\n")
+          PY
+      - uses: actions/setup-python@v7
         with:
-          python-version: ${{ matrix.python-version }}
+          # asv's virtualenv plugin needs every interpreter in "pythons" on PATH
+          # (it silently skips a missing one). The last one listed becomes the
+          # default `python`, which runs asv itself.
+          python-version: ${{ steps.asv-pythons.outputs.versions }}
+      - name: Check the asv interpreters are available
+        env:
+          ASV_PYTHONS: ${{ steps.asv-pythons.outputs.versions }}
+        run: for version in $ASV_PYTHONS; do "python$version" -V; done
       - name: Build and test
+        env:
+          # Older xradio commits pin numcodecs<0.16, which has no cp314 wheel;
+          # its bundled c-blosc does not compile as C23 (GCC >= 15's default).
+          CFLAGS: "-std=gnu17"
         run: |
           # if environment_type "existing", install project and dependencies
           # otherwise, just need asv and selected environment manager
@@ -101,7 +129,7 @@ jobs:
           destination_dir: xradio
           keep_files: true
       - name: Archive generated html
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         if: '!cancelled()'
         with:
           name: publish-html

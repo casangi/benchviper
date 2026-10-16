@@ -1,16 +1,13 @@
 import dataclasses
 from typing import Literal, Optional
+
+import dask.array
 import numpy
 import xarray
-import dask.array
-
-from xradio.schema.typing import Attr, Coord, Coordof, Data, Dataof
-from xradio.schema.metamodel import (
-    ArraySchema,
-    ArraySchemaRef,
-    AttrSchemaRef,
-    DatasetSchema,
-    DictSchema,
+from xradio.schema.bases import (
+    dict_schema,
+    xarray_dataarray_schema,
+    xarray_dataset_schema,
 )
 from xradio.schema.check import (
     check_array,
@@ -18,16 +15,19 @@ from xradio.schema.check import (
     check_dict,
 )
 from xradio.schema.dataclass import (
-    xarray_dataclass_to_dict_schema,
     xarray_dataclass_to_array_schema,
     xarray_dataclass_to_dataset_schema,
-)
-from xradio.schema.bases import (
-    xarray_dataarray_schema,
-    xarray_dataset_schema,
-    dict_schema,
+    xarray_dataclass_to_dict_schema,
 )
 from xradio.schema.export import export_schema_json_file, import_schema_json_file
+from xradio.schema.metamodel import (
+    ArraySchema,
+    ArraySchemaRef,
+    AttrSchemaRef,
+    DatasetSchema,
+    DictSchema,
+)
+from xradio.schema.typing import Attr, Coord, Coordof, Data, Dataof
 
 Dim1 = Literal["coord"]
 Dim2 = Literal["coord2"]
@@ -100,6 +100,7 @@ TEST_ARRAY_SCHEMA = ArraySchema(
         ),
     ],
 )
+
 
 @dict_schema
 class _TestDictSchema:
@@ -187,7 +188,7 @@ class _TestDatasetSchema:
     """Optional attribute with default"""
 
 
-def _dataclass_to_dict(obj, ignore=[]):
+def _dataclass_to_dict(obj, ignore=()):
     return {
         f.name: getattr(obj, f.name)
         for f in dataclasses.fields(type(obj))
@@ -282,6 +283,7 @@ class TestSchema:
     Originally adapted from:
     https://github.com/casangi/xradio/blob/main/tests/unit/schema/test_schema.py
     """
+
     version = "xradio 1.0.2"
 
     def setup_cache(self):
@@ -392,9 +394,7 @@ class TestSchema:
         ]
         data2 = numpy.zeros(10, dtype=complex)[:, numpy.newaxis]
         attrs = {"attr1": "str", "attr2": 123, "attr3": 345}
-        check_array(
-            xarray.DataArray(data2, coords2, attrs=attrs), TEST_ARRAY_SCHEMA
-        )
+        check_array(xarray.DataArray(data2, coords2, attrs=attrs), TEST_ARRAY_SCHEMA)
 
     def time_check_array_missing_coord(self):
         data0 = numpy.array(None, dtype=complex)
