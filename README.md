@@ -34,7 +34,7 @@ Dedication of an on-premises test machine connected to this repository as a self
 
 > [!WARNING]
 > When changing a benchmark, if there is no version attribute already assigned to a given tests, than _any_ change to the test code will cause asv to register it as a new version of the test. This is because all code (including setup, whitespace, and comments) is hashed and stored in the version parameter of xradio/results/benchmarks.json. Special care should be taken to ensure backward compatibility.
-> 
+>
 > See these pages in the [asv docs](https://asv.readthedocs.io/en/stable/writing_benchmarks.html) and [numpy repository](https://github.com/numpy/numpy/tree/main/benchmarks#writing-benchmarks) for more details on best practices for writing good benchmarks.
 
 ## Interaction with parent repositories

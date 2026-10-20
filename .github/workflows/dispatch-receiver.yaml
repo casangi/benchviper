@@ -8,7 +8,7 @@ name: Dispatch Receiver - Benchmark Test Trigger
 jobs:
   trigger-benchmark-tests:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Log dispatch event details
       run: |
@@ -27,7 +27,7 @@ jobs:
       with:
         script: |
           const payload = context.payload.client_payload;
-          
+
           // Trigger the astroviper workflow
           await github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
@@ -45,8 +45,8 @@ jobs:
               'triggered_by': 'repository_dispatch'
             }
           });
-          
-          console.log('Successfully triggered astroviper workflow'); 
+
+          console.log('Successfully triggered astroviper workflow');
 
     - name: Trigger xradio workflow
       if: contains(github.event.client_payload.component, 'xradio')
@@ -54,7 +54,7 @@ jobs:
       with:
         script: |
           const payload = context.payload.client_payload;
-          
+
           // Trigger the xradio workflow
           await github.rest.actions.createWorkflowDispatch({
             owner: context.repo.owner,
@@ -72,5 +72,5 @@ jobs:
               'triggered_by': 'repository_dispatch'
             }
           });
-          
+
           console.log('Successfully triggered xradio workflow');
