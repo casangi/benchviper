@@ -2,7 +2,7 @@
 This area contains the workflow definition files that run in github actions.
 
 ### xradio.yaml
-This file defines the workflow that runs daily to check for merge commits in xradio and runs _new_ combinations of 
+This file defines the workflow that runs daily to check for merge commits in xradio and runs _new_ combinations of
 - environment (defined by asv.conf.json)
 - commit (defined by the range specified in the `asv run command`
 - test (defined by the contents of xradio/benchmarks of this repository, on the main branch)
@@ -18,8 +18,8 @@ This file defines the workflow that is triggered on demand to run only _the late
 ### Python versions
 Both `asv.conf.json` files benchmark Python 3.12, 3.13 and 3.14 (`"pythons"`). Each workflow reads that list from the project's `asv.conf.json` and installs those interpreters with `actions/setup-python`, so the versions are set in one place (asv's virtualenv plugin silently skips an interpreter it cannot find on `PATH`, so the workflow checks that each one is available). The last one listed is the default `python`, which runs asv itself. The 3.14 environment uses python-casacore 3.8.1 (3.7.1 has no 3.14 wheel) and sets `PIP_IGNORE_REQUIRES_PYTHON=1`, because historical xradio/astroviper commits declare `requires-python` "<3.14".
 
-### lint.yml
-Runs `ruff check` and `ruff format --check` (configuration in `ruff.toml`) on every push and pull request, through the shared `ruff-template.yml` in `nrao/gh-actions-templates-public`.
+### pre-commit.yml
+Runs every hook of `.pre-commit-config.yaml` on all files, on every push and pull request: repository hygiene checks, pyupgrade, absolufy-imports, `ruff check` and `ruff format` (configuration in `ruff.toml`), and nbstripout. The hooks leave asv's results (`*/results/`) alone, and pyupgrade leaves the benchmark sources alone.
 
 ### Future Projects
 When adding benchmarks for additional projects (e.g., astroviper), create a new workflow file following the same pattern:

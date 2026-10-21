@@ -100,7 +100,7 @@ jobs:
             # If triggered by a dispatch, run the last 3 commits on main
             asv run "--merges main~3..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
           else
-            # Otherwise, run from the v1.0.2 tag to main 
+            # Otherwise, run from the v1.0.2 tag to main
             asv run --verbose "--merges v1.0.2..main" --machine gh-runner --parallel --interleave-rounds --skip-existing-successful
           fi
       - name: Push results
