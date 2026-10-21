@@ -35,7 +35,7 @@
     // Customizable commands for installing and uninstalling the project.
     // See asv.conf.json documentation.
     //"install_command": ["in-dir={env_dir} python -m pip install {build_dir}/dist/*.whl"],
-    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}[all]"],
+    "install_command": ["in-dir={env_dir} python -m pip install {wheel_file}[casacore,test]"],
     "uninstall_command": ["return-code=any python -m pip uninstall -y {project}"],
 
     // List of branches to benchmark. If not provided, defaults to "main"
@@ -106,12 +106,12 @@
     //     "env_nobuild": {"ENV_VAR_2": ["val3", null]},
     // },
     "matrix": {
-        "req": {
-            // python-casacore 3.7.1 has no cp314 wheel (its sdist needs a system
-            // casacore), so 3.14 uses 3.8.1. 3.12/3.13 keep 3.7.1 so the existing
-            // py3.12 result series keeps its environment name.
-            "python-casacore": ["3.7.1", "3.8.1"],
-        },
+        // "req": {
+        //     // python-casacore 3.7.1 has no cp314 wheel (its sdist needs a system
+        //     // casacore), so 3.14 uses 3.8.1. 3.12/3.13 keep 3.7.1 so the existing
+        //     // py3.12 result series keeps its environment name.
+        //     "python-casacore": ["3.7.1", "3.8.1"],
+        // },
         "env": {
             // Every historical commit (and every release of the VIPER
             // dependencies before the 3.14 bump) declares requires-python
