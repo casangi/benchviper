@@ -14,8 +14,7 @@ micromamba install asv
 asv quickstart
 # configured to use "standalone repo" option, which creates asv.conf.json
 ```
-> [!NOTE]
-> For `xradio`, the environment building commands disqualify running benchmarks using [asv's environment isolation](https://asv.readthedocs.io/en/latest/using.html#environments) on macOS (unless "environment_type" is set to "existing"). The `asv.conf.json` matrix installs `python-casacore`, which has wheels for Linux x86_64 only, because XRADIO commits before 1.3.0 read casacore tables with it. From 1.3.0, XRADIO uses [arcae](https://github.com/ska-sa/arcae) instead, which its `[all]` extra installs from pip on Linux and macOS.
+
 
 ## Running and publishing benchmarks
 
@@ -40,4 +39,4 @@ Dedication of an on-premises test machine connected to this repository as a self
 ## Interaction with parent repositories
 
 > [!NOTE]
-> Hooks to trigger automated testing for integration with PR workflows and reporting on CI dashboards can be configured using an additional dispatch mechanism in [testviper/.github/workflows/dispatch-receiver.yml](https://github.com/casangi/testviper/blob/main/.github/workflows/dispatch-receiver.yml). This is under development.
+> The GitHub Actions on this repository are triggered via a dispatch mechanism that is received in [.github/workflows/dispatch-receiver.yaml](https://github.com/casangi/benchviper/blob/main/.github/workflows/dispatch-receiver.yaml). 
