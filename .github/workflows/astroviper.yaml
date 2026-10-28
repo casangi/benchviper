@@ -97,7 +97,7 @@ jobs:
         run: |
           # if environment_type "existing", install project and dependencies
           # otherwise, just need asv and selected environment manager
-          pip install asv virtualenv
+          pip install -r requirements.txt
           # benchviper organizes each external project in its own subdir
           cd astroviper
           asv machine --machine gh-runner --yes
