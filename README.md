@@ -39,4 +39,4 @@ Dedication of an on-premises test machine connected to this repository as a self
 ## Interaction with parent repositories
 
 > [!NOTE]
-> The GitHub Actions on this repository are triggered via a dispatch mechanism that is received in [.github/workflows/dispatch-receiver.yaml](https://github.com/casangi/benchviper/blob/main/.github/workflows/dispatch-receiver.yaml). 
+> The GitHub Actions on this repository are triggered via a dispatch mechanism that is received in [.github/workflows/dispatch-receiver.yaml](https://github.com/casangi/benchviper/blob/main/.github/workflows/dispatch-receiver.yaml).
