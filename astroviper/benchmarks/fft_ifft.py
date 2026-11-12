@@ -1,5 +1,5 @@
 import numpy as np
-from astroviper.processing_functions.imaging.fft_normalize_prolate_spheriodal_gridder import (
+from astroviper.processing_functions.imaging.fft_normalize_anti_alias_gridder import (
     fft_lm_to_uv,
     ifft_uv_to_lm,
 )
